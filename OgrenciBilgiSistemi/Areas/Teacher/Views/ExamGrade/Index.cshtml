@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Teacher/Views/Shared/_TeacherLayout.cshtml";
+}
+<div class="row mb-4">
+    <div class="col-md-6">
+        <label for="DepartmentLanguageId" class="col-form-label">Ders:</label>
+        <select name="CourseId" id="CourseId" class="form-control">
+            @foreach (var item in ViewBag.Course)
+            {
+                <option value="@item.Id">@item.CourseName</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6">
+        <label for="DepartmentLanguageId" class="col-form-label">Year:</label>
+        <select name="AssessmentYear" id="AssessmentYear" class="form-control">
+            @foreach (var item in ViewBag.Year)
+            {
+                <option value="@item.Id">@item.AssessmentYear @item.Semester.SemesterName</option>
+            }
+        </select>
+    </div>
+</div>
+
+<table id="ExamGradeTable" class="table table-bordered nowrap table-sm">
+    <thead>
+        <tr>
+            <th>Öğrenci Adı</th>
+            <th>Sınav Tipi</th>
+            <th>Ders Notu</th>
+        </tr>
+    </thead>
+</table>
+
+<script src="/js/teacher/ExamGrade.js"></script>

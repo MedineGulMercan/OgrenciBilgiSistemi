@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<style>
+
+</style>
+<table id="CourseRegistrationDetailTable" class="table table-bordered nowrap table-sm">
+    <thead>
+        <tr>
+            <th>Öğrenci Adı/Soyadı</th>
+            <th>Bölüm</th>
+            <th>Dönem</th>
+            <th>Sınıf</th>
+            <th>Ders</th>
+            <th>Öğretmen</th>
+        </tr>
+    </thead>
+    <tbody id="course_registration-table-body">
+        @foreach (var item in ViewBag.CourseRegistration)
+        {
+            <tr>
+                <th>@item.StudentName<input type="hidden" id="student-name" value="@item.StudentId" /></th>
+                <th>@item.DepartmentName<input type="hidden" id="department-name" value="@item.DepartmentId" /></th>
+                <th>@item.CurrentSemesterName<input type="hidden" id="current-semester-name" value="@item.CurrentSemesterId" /></th>
+                <th>@item.ClassName<input type="hidden" id="class-name" value="@item.ClassId" /></th>
+                <th>@item.CourseName<input type="hidden" id="course-name" value="@item.CourseId" /></th>
+                <th>@item.TeacherNameSurname<input type="hidden" id="teacher-name" value="@item.TeacherId" /></th>
+            </tr>
+        }
+    </tbody>
+</table>
+<div class="row" style="text-align: right;">
+    <div class="col-md-12">
+        <button type="button" onclick="RegistrationApproved()" class="btn btn-success">Onay</button>
+        <button type="button" onclick="DeleteRegister()"class="btn btn-danger">Red</button>
+    </div>
+</div>
+<script src="/js/admin/courseRegistration.js"></script>

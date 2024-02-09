@@ -1,0 +1,89 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Teacher/Views/Shared/_TeacherLayout.cshtml";
+}
+<div class="page-header mb-3">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title">
+                    <button type="button"
+                            class="btn float-right"
+                            data-toggle="modal"
+                            data-target="#courseAssessmentAddModal">
+                        <i class="_icon fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+<div class="modal fade" id="courseAssessmentAddModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sınav Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="courseAssessment-create-form" onsubmit="return CourseAssessmentCreate(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="AssessmentName" class="col-form-label">Sınav Adı:</label>
+                        <input required type="text" class="form-control" id="AssessmentName" name="AssessmentName">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="PassingScore" class="col-form-label">Geçme Notu:</label>
+                        <input required type="number" class="form-control" id="PassingScore" name="PassingScore">
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <label for="CourseId" class="col-form-label">Ders:</label>
+                    <select name="CourseId" id="CourseId" class="form-control">
+                         @foreach (var item in ViewBag.Course)
+                        {
+                        <option value="@item.Id">@item.CourseName</option>
+                        }
+                    </select>
+                </div>
+                <div class="modal-body">
+                    <label for="AssessmentTypeId" class="col-form-label">Sınav Türü:</label>
+                    <select name="AssessmentTypeId" id="AssessmentTypeId" class="form-control">
+                        @foreach (var item in ViewBag.AssessmentType)
+                        {
+                            <option value="@item.Id">@item.AssessmentTypeName</option>
+                        }
+                    </select>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="ImpactCourseGrade" class="col-form-label">Ders Notunu Etkileme Yüzdesi:</label>
+                        <input required type="number" class="form-control" id="ImpactCourseGrade" name="ImpactCourseGrade">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<table id="CourseAssessmentTable" class="table table-bordered nowrap table-sm">
+    <thead>
+        <tr>
+            <th hidden>Id</th>
+            <th>Sınav Adı</th>
+            <th>Geçme Notu</th>
+            <th>Ders</th>
+            <th>Sınav Türü</th>
+            <th>Ders Notunu Etkileme Yüzdesi</th>
+        </tr>
+    </thead>
+</table>
+
+<script src="/js/teacher/courseAssessment.js"></script>

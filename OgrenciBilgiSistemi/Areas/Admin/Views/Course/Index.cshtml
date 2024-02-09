@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-header mb-3">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title">
+                    <button type="button"
+                            class="btn float-right"
+                            data-toggle="modal"
+                            data-target="#courseAddModal">
+                        <i class="_icon fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="courseAddModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ders Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="course-create-form" onsubmit="return CourseCreate(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="CourseName" class="col-form-label">Ders Adı:</label>
+                        <input required type="text" class="form-control" id="CourseName" name="CourseName">
+                    </div>
+                    <div class="form-group">
+                        <label for="CourseCredit" class="col-form-label">Ders Kredisi:</label>
+                        <input required type="number" class="form-control" name="CourseCredit" id="CourseCredit" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CourseAkts" class="col-form-label">Ders AKTS'si':</label>
+                        <input required type="number" class="form-control" name="CourseAkts" id="CourseAkts" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CourseCode" class="col-form-label">Ders Kodu:</label>
+                        <input required type="text" class="form-control" name="CourseCode" id="CourseCode" />
+                    </div>
+                    <div class="form-group">
+                        <label for="PracticalCourse" class="col-form-label">Uygulamalı Ders Mi?:</label>
+                        <input type="checkbox" value="true" class="PracticalCourse" name="PracticalCourse" />
+                    </div>
+                    <div class="form-group">
+                        <label for="PreparationCourse" id="PreparationCourse" class="col-form-label">Hazırlık Sınıfı Dersi Mi?:</label>
+                        <input type="checkbox" class="PreparationCourse" name="PreparationCourse"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<table id="CourseTable" class="table table-bordered nowrap table-sm">
+    <thead>
+        <tr>
+            <th>Ders Adı</th>
+            <th>Ders Kredisi</th>
+            <th>Ders AKTS'si'</th>
+            <th>Ders Kodu</th>
+            <th>Uygulamalı Ders Mi?</th>
+            <th>Hazırlık Sınıfı Dersi Mi?</th>
+        </tr>
+    </thead>
+</table>
+
+<script src="/js/admin/course.js"></script>
+

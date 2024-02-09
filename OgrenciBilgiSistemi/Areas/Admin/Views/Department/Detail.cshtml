@@ -1,0 +1,107 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@model OgrenciBilgiSistemi.Domain.Entities.Department
+
+<form id="department-update-form" onsubmit="return DepartmentUpdate(event)">
+    <div class="modal-body">
+        <input required type="hidden" class="form-control" id="Id" name="Id" value="@Model.Id">
+        <div class="form-group">
+            <label for="DepartmentName" class="col-form-label">Bölüm Adı:</label>
+            <input required type="text" class="form-control" id="DepartmentName" name="DepartmentName" value="@Model.DepartmentName">
+        </div>
+        <div class="form-group">
+            <label for="DepartmentLanguageId" class="col-form-label">Bölüm Dili:</label>
+            <select name="DepartmentLanguageId" id="DepartmentLanguageId" class="form-control">
+                @foreach (var item in ViewBag.Language)
+                {
+                    @if (item.Id == Model.DepartmentLanguageId)
+                    {
+                        <option value="@item.Id" selected>@item.LanguageName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.LanguageName</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </div>
+</form>
+
+<form id="add-row-table" onsubmit="return AddRowTable(event)">
+    <div class="form-group">
+        <label for="ClassId" class="col-form-label">Sınıf Adı:</label>
+        <select name="ClassId" id="ClassId" class="form-control">
+            @foreach (var item in ViewBag.Classes)
+            {
+                <option value="@item.Id">@item.ClassName</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="SemesterId" class="col-form-label">Dönem Adı:</label>
+        <select name="SemesterId" id="SemesterId" class="form-control">
+            @foreach (var item in ViewBag.Semesters)
+            {
+                <option value="@item.Id">@item.SemesterName</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label for="CourseId" class="col-form-label">Ders Adı:</label>
+        <select name="CourseId" id="CourseId" class="form-control" onchange="GetTeachers()">
+            @foreach (var item in ViewBag.Courses)
+            {
+                <option value="@item.Id">@item.CourseName</option>
+            }
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="TeacherId" class="col-form-label">Dersin Öğretmeni:</label>
+        <select name="TeacherSelect" id="TeacherSelect" class="form-control">
+         
+        </select>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Ekle</button>
+    </div>
+</form>
+
+<table id="SemesterCoursesTable" class="table table-bordered nowrap table-sm mt-3">
+    <thead>
+        <tr>
+            <th hidden>Bölüm Adı</th>
+            <th>Sınıf Adı</th>
+            <th>Dönem Adı</th>
+            <th>Ders Adı</th>
+            <th>Dersin Öğretmeni</th>
+            <th>Sil</th>
+        </tr>
+    </thead>
+    <tbody id="SemesterCoursesTableBody">
+        @foreach (var item in ViewBag.SemesterCoursess)
+        {
+            <tr>
+                <th hidden><input type="hidden" id="department-id" value="@item.DepartmentId" /></th>
+                <th>@item.ClassName<input type="hidden" id="department-id" value="@item.ClassId" /></th>
+                <th>@item.SemesterName<input type="hidden" id="department-id" value="@item.SemesterId" /></th>
+                <th>@item.CourseName<input type="hidden" id="department-id" value="@item.CourseId" /></th>
+                <th>@item.TeacherName<input type="hidden" id="teacher-id" value="@item.TeacherId" /></th>
+                <th style="text-align:center;"><i onclick="DeleteRow(this)" class="fa fa-trash" aria-hidden="true"></i></th>
+            </tr>
+        }
+    </tbody>
+</table>
+<form onsubmit="return SemesterCoursesTableUpdate(event)">
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </div>
+</form>
+<script src="/js/admin/department.js"></script>

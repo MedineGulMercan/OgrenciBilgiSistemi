@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Teacher/Views/Shared/_TeacherLayout.cshtml";
+}
+@model OgrenciBilgiSistemi.Domain.Entities.CourseAssessment
+<form id="courseAssessment-update-form" onsubmit="return CourseAssessmentUpdate(event)">
+    <div class="modal-body">
+        <input required type="hidden" id="Id" name="Id" value="@Model.Id">
+        <div class="form-group">
+            <label for="CourseAssessmentName" class="col-form-label">Sınav Adı:</label>
+            <input required type="text" class="form-control" id="AssessmentName" name="AssessmentName" value="@Model.AssessmentName">
+        </div>
+        <div class="form-group">
+            <label for="PassingScore" class="col-form-label">Geçme Notu:</label>
+            <input required type="text" class="form-control" id="PassingScore" name="PassingScore" value="@Model.PassingScore">
+        </div>
+        <div class="modal-body">
+            <label for="CourseId" class="col-form-label">Ders:</label>
+            <select name="CourseId" id="CourseId" class="form-control">
+                @foreach (var item in ViewBag.Course)
+                {
+                    if(item.Id== Model.CourseId)
+                    {
+                        <option selected value="@item.Id">@item.CourseName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.CourseName</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="modal-body">
+            <label for="AssessmentTypeId" class="col-form-label">Sınav Türü:</label>
+            <select name="AssessmentTypeId" id="AssessmentTypeId" class="form-control">
+                @foreach (var item in ViewBag.AssessmentTypes)
+                {
+                    if (item.Id == Model.AssessmentTypeId)
+                    {
+                        <option selected value="@item.Id">@item.AssessmentTypeName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.AssessmentTypeName</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="ImpactCourseGrade" class="col-form-label">Ders Notunu Etkileme Yüzdesi:</label>
+            <input required type="text" class="form-control" id="ImpactCourseGrade" name="ImpactCourseGrade" value="@Model.ImpactCourseGrade">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="/Teacher/CourseAssessment/Index" class="btn btn-secondary" data-dismiss="modal">İptal</a>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </div>
+</form>
+<script src="/js/teacher/courseAssessment.js"></script>

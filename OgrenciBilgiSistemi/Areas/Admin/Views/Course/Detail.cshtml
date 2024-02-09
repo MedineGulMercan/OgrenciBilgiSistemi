@@ -1,0 +1,123 @@
+﻿@using OgrenciBilgiSistemi.Dto.CourseLetterScore
+@using OgrenciBilgiSistemi.Dto.TeacherCourse
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@model OgrenciBilgiSistemi.Domain.Entities.Course
+@{
+    // ViewBag'den verileri çekme
+    var courseLetterScoreDetailDto = ViewBag.CourseLetterScore as List<CourseLetterScoreDetailDto>;
+}
+<style>
+    .delete {
+        float: right;
+    }
+
+</style>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger pull-right delete" onclick="Delete()">Sil</button>
+</div>
+
+<form id="course-update-form" onsubmit="return CourseUpdate(event)">
+    <div class="modal-body">
+        <input required type="hidden" id="Id" name="Id" value="@Model.Id">
+        <div class="form-group">
+            <label for="CourseName" class="col-form-label">Ders Adı:</label>
+            <input required type="text" class="form-control" id="CourseName" name="CourseName" value="@Model.CourseName">
+        </div>
+        <div class="form-group">
+            <label for="CourseCredit" class="col-form-label">Ders Kredisi:</label>
+            <input required type="number" class="form-control" name="CourseCredit" id="CourseCredit" value="@Model.CourseCredit" />
+        </div>
+        <div class="form-group">
+            <label for="CourseAkts" class="col-form-label">Ders AKTS'si:</label>
+            <input required type="number" class="form-control" name="CourseAkts" id="CourseAkts" value="@Model.CourseAkts" />
+        </div>
+        <div class="form-group">
+            <label for="CourseCode" class="col-form-label">Ders Kodu:</label>
+            <input required type="text" class="form-control" name="CourseCode" id="CourseCode" value="@Model.CourseCode" />
+        </div>
+        <div class="form-group">
+            <label for="PracticalCourse" class="col-form-label">Uygulamalı Ders Mi?:</label>
+            <input type="checkbox" value="true" class="PracticalCourse" name="PracticalCourse" @(Model.PracticalCourse ? "checked" : "") />
+        </div>
+        <div class="form-group">
+            <label for="PreparationCourse" id="PreparationCourse" class="col-form-label">Hazırlık Sınıfı Dersi Mi?:</label>
+            <input type="checkbox" class="PreparationCourse" name="PreparationCourse" value="true" @(Model.PreparationCourse ? "checked" : "") />
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="/Admin/Course/Index" class="btn btn-secondary" data-dismiss="modal">İptal</a>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </div>
+</form>
+
+<div class="modal-body">
+    <form id="add-row-table" onsubmit="return AddRowTeacherTable(event)">
+        <div class="form-group">
+            <label for="TeacherId" class="col-form-label">Öğretmen Adı:</label>
+            <select name="TeacherId" id="TeacherId" class="form-control">
+                @foreach (var item in ViewBag.Teacher)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-primary">Ekle</button>
+        </div>
+    </form>
+    <table id="teacher-course-table-table" class="table table-bordered nowrap table-sm mt-3">
+        <thead>
+            <tr>
+                <th hidden>TeacherId</th>
+                <th hidden>CourseId</th>
+                <th>Öğretmen Adı</th>
+                <th>Sil</th>
+            </tr>
+        </thead>
+        <tbody id="teacher-course-table-body">
+            @foreach (var item in ViewBag.TeacherCourse)
+            {
+                <tr>
+                    <th hidden><input type="hidden" id="teacher-id" value="@item.TeacherId" /></th>
+                    <th hidden><input type="hidden" id="course-id" value="@item.CourseId" /></th>
+                    <th>@item.TeacherName<input type="hidden" id="teacher-name" value="@item.TeacherName" /></th>
+                    <th style="text-align:center;"><i onclick="DeleteRow(this)" class="fa fa-trash" aria-hidden="true"></i></th>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <form onsubmit="return TeacherCoursesTableUpdate(event)">
+        <div class="modal-footer">
+            <button href="~/Admin/User/Index" type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+            <button type="submit" class="btn btn-primary">Güncelle</button>
+        </div>
+    </form>
+</div>
+
+<div class="modal-body">
+    <table id="CourseRegistrationDetailTable" class="table table-bordered nowrap table-sm">
+        <thead>
+            <tr>
+                <th hidden>CourseId</th>
+                <th>Harf Notu</th>
+                <th>Puan</th>
+            </tr>
+        </thead>
+        <tbody id="course_registration-table-body">
+            @foreach (var item in courseLetterScoreDetailDto)
+            {
+                <tr>
+                    <th hidden>@item.CourseId<input type="hidden" id="course-id" value="@item.CourseId" /></th>
+                    <th>@item.Letter<input type="hidden" id="letter-grade-id" value="@item.LetterGradeId" /></th>
+                    <th><input type="text" class="form-control" id="course-grade" onfocusout="CourseLetterScoreUpdate(event,this,'@item.CourseId','@item.LetterGradeId')" value="@item.CourseGrade" /></th>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<script src="/js/admin/course.js"></script>

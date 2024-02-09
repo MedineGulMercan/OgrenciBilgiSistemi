@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-header mb-3">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title">
+                    <button type="button"
+                            class="btn float-right"
+                            data-toggle="modal"
+                            data-target="#userAddModal">
+                        <i class="_icon fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade mt-3" id="userAddModal" tabindex="-1" role="dialog" aria-labelledby="userAddModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Öğretmen Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="user-create-form" onsubmit="return UserCreate(event)">
+
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="RoleId" id="role-id-label" class="col-form-label">Kullanıcı Türü:</label>
+                        <select class="form-control" id="RoleId" onchange="ChangeAddModal()" name="RoleId" >
+                            @foreach (var item in ViewBag.Roles)
+                            {
+                                <option value="@item.Id">@item.RoleDescription</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="Name" id="name-label" class="col-form-label">Öğretmen Adı:</label>
+                        <input required type="text" class="form-control" id="Name" name="Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="SurName" id="surname-label" class="col-form-label">Öğretmen Soyadı:</label>
+                        <input required type="text" class="form-control" name="SurName" id="SurName" />
+                    </div>
+                    <div class="form-group">
+                        <label for="TC" id="tc-label" class="col-form-label">Öğretmen TC:</label>
+                        <input required type="number" class="form-control" name="TC" id="TC" />
+                    </div>
+                    <div class="form-group" id="class-div" style="display:none;">
+                        <label for="ClassId" class="col-form-label">Sınıf:</label>
+                        <select class="form-control" id="ClassId" name="ClassId">
+                            @foreach (var item in ViewBag.Class)
+                            {
+                                <option selected value="@item.Id">@item.ClassName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group" id="department-div" style="display:none;">
+                        <label for="DepartmentId" class="col-form-label">Bölüm:</label>
+                        <select class="form-control" id="DepartmentId" name="DepartmentId">
+                            @foreach (var item in ViewBag.Department)
+                            {
+                                <option selected value="@item.Id">@item.DepartmentName</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="EmailAddress" id="email-address-label" class="col-form-label">Öğretmen E-Mail Adres:</label>
+                        <input required type="email" class="form-control" name="EmailAddress" id="EmailAddress" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Birthday" id="birthday-label" class="col-form-label">Öğretmen Doğum Tarihi:</label>
+                        <input required type="date" class="form-control" name="Birthday" id="Birthday" />
+                    </div>
+                    <div class="form-group">
+                        <label for="PhoneNumber" id="tel-label" class="col-form-label">Öğretmen Telefon No:</label>
+                        <input required type="number" class="form-control" name="PhoneNumber" id="PhoneNumber" />
+                    </div>
+                    <div class="form-group">
+                        <label for="CityId" id="CityId" class="col-form-label">Şehir:</label>
+                        <select class="form-control" id="CityId" name="CityId">
+                            @foreach (var item in ViewBag.City)
+                            {
+                                <option value="@item.Id">@item.CityName</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<table id="user-table" class="table table-bordered nowrap table-sm">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>TC</th>
+            <th>EmailAddress</th>
+            <th>Birthday</th>
+            <th>PhoneNumber</th>
+            <th>RoleName</th>
+        </tr>
+    </thead>
+</table>
+
+<script src="/js/admin/user.js"></script>

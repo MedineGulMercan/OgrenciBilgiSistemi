@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<div class="page-header mb-3">
+    <div class="page-block">
+        <div class="row align-items-center">
+            <div class="col-md-12">
+                <div class="page-header-title">
+                    <button type="button"
+                            class="btn float-right"
+                            data-toggle="modal"
+                            data-target="#classAddModal">
+                        <i class="_icon fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="classAddModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sınıf Ekle</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="class-create-form" onsubmit="return ClassCreate(event)">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="ClassName" class="col-form-label">Sınıf Adı:</label>
+                        <input required type="text" class="form-control" id="ClassName" name="ClassName">
+                    </div>
+                </div>
+               
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<table id="ClassTable" class="table table-bordered nowrap table-sm">
+    <thead>
+        <tr>
+            <th>Sınıf Adı</th>
+        </tr>
+    </thead>
+</table>
+
+<script src="/js/admin/class.js"></script>

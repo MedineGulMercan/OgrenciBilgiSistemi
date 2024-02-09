@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@model OgrenciBilgiSistemi.Domain.Entities.DepartmentLanguage
+<style>
+    .delete{
+        float:right;
+    }
+
+</style>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger pull-right delete" onclick="Delete()">Sil</button>
+</div>
+
+<form id="departmentLanguage-update-form" onsubmit="return DepartmentLanguageUpdate(event)">
+    <div class="modal-body">
+        <input required type="hidden" id="Id" name="Id" value="@Model.Id">
+        <div class="form-group">
+            <label for="LanguageName" class="col-form-label">Bölüm Dili:</label>
+            <input required type="text" class="form-control" id="LanguageName" name="LanguageName" value="@Model.LanguageName">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="/Admin/DepartmentLanguage/Index" class="btn btn-secondary" data-dismiss="modal">İptal</a>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </div>
+</form>
+
+<script src="/js/admin/departmentLanguage.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

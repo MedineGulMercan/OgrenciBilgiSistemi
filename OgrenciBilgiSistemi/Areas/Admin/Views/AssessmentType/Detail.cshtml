@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+@model OgrenciBilgiSistemi.Domain.Entities.AssessmentType
+<style>
+    .delete {
+        float: right;
+    }
+
+</style>
+<div class="modal-footer">
+    <button type="button" class="btn btn-danger pull-right delete" onclick="Delete()">Sil</button>
+</div>
+<form id="assessmentType-update-form" onsubmit="return AssessmentTypeUpdate(event)">
+    <div class="modal-body">
+        <input required type="hidden" id="Id" name="Id" value="@Model.Id">
+        <div class="form-group">
+            <label for="AssessmentTypeName" class="col-form-label">Sınav Türü Adı:</label>
+            <input required type="text" class="form-control" id="AssessmentTypeName" name="AssessmentTypeName" value="@Model.AssessmentTypeName">
+        </div>
+    </div>
+    <div class="modal-footer">
+        <a href="/Admin/AssessmentType/Index" class="btn btn-secondary" data-dismiss="modal">İptal</a>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </div>
+</form>
+<script src="/js/admin/assessmentType.js"></script>

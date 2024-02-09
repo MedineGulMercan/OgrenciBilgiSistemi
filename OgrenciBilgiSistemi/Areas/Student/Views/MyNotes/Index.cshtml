@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Student/Views/Shared/_StudentLayout.cshtml";
+}
+<style>
+    ul, ol {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 5px; /* Opsiyonel: Liste öğeleri arasında boşluk eklemek için */
+    }
+</style>
+<div>
+    Gano : @ViewBag.Gano
+</div>
+<div class="row mb-4">
+    <div class="col-md-12">
+        <label for="DepartmentLanguageId" class="col-form-label">Ders:</label>
+        <select name="semesterId" id="semesterId" class="form-control">
+            @foreach (var item in ViewBag.Semesters)
+            {
+                <option data-credit="@item.ClassId" value="@item.SemesterId">Sınıf: @item.Class.ClassName @item.Semester.SemesterName</option>
+            }
+        </select>
+    </div>
+</div>
+
+<table id="MyNotes" class="table table-bordered nowrap table-sm">
+    <thead>
+        <tr style="vertical-align:middle;">
+            <th>Ders Adı</th>
+            <th>Not</th>
+            <th>Ders Ortalaması</th>
+            <th>Harf Notu</th>
+            <th>Ders Durumu</th>
+        </tr>
+    </thead>
+</table>
+
+<script src="/js/student/myNotes.js"></script>

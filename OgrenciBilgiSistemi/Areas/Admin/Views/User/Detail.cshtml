@@ -1,0 +1,167 @@
+﻿@using OgrenciBilgiSistemi.Const
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+@model OgrenciBilgiSistemi.Dto.User.UserDetailDto
+
+<form id="user-update-form" onsubmit="return UserUpdate(event)">
+    <div class="modal-body">
+        <input type="hidden" class="form-control" id="Id" name="Id" value="@Model.Id">
+        <input type="hidden" class="form-control" id="UserId" name="UserId" value="@Model.UserId">
+        @if (Model.RoleName == RoleConst.OgrenciRole)
+        {
+            <input type="hidden" class="form-control" id="Id" name="Id" value="@Model.StudentId">
+        }
+        else
+        {
+            <input type="hidden" class="form-control" id="Id" name="Id" value="@Model.TeacherId">
+        }
+        <div class="form-group">
+            <label for="kullaniciAdi" id="RoleId" class="col-form-label">Kullanıcı Türü:</label>
+            <select class="form-control" id="RoleId" name="RoleId" disabled>
+                @foreach (var item in ViewBag.Roles)
+                {
+                    if (item.Id == Model.RoleId)
+                    {
+                        <option selected value="@item.Id">@item.RoleDescription</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.RoleDescription</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="Name" id="Name" class="col-form-label">@(RoleConst.OgrenciRole == Model.RoleName ? "Öğrenci Adı" : "Öğretmen Adı"):</label>
+            <input required type="text" class="form-control" id="Name" name="Name" value="@Model.Name">
+        </div>
+        <div class="form-group">
+            <label for="SurName" id="SurName" class="col-form-label">@(RoleConst.OgrenciRole == Model.RoleName ? "Öğrenci Soyadı" : "Öğretmen Soyadı"):</label>
+            <input required type="text" class="form-control" name="SurName" id="SurName" value="@Model.Surname" />
+        </div>
+        <div class="form-group">
+            <label for="TC" id="TC" class="col-form-label">@(RoleConst.OgrenciRole == Model.RoleName ? "Öğrenci TC" : "Öğretmen TC"):</label>
+            <input required type="number" class="form-control" name="TC" id="TC" value="@Model.TC" />
+        </div>
+        <div class="form-group">
+            <label for="EmailAddress" id="EmailAddress" class="col-form-label">@(RoleConst.OgrenciRole == Model.RoleName ? "Öğrenci EMail Adres" : "Öğrenci EMail Adres"):</label>
+            <input required type="email" class="form-control" name="EmailAddress" id="EmailAddress" value="@Model.EmailAddress" />
+        </div>
+        <div class="form-group">
+            <label for="Birthday" id="Birthday" class="col-form-label">@(RoleConst.OgrenciRole == Model.RoleName ? "Öğrenci Doğum Tarihi" : "Öğrenci Doğum Tarihi"):</label>
+            <input required type="date" class="form-control" name="Birthday" id="Birthday" value="@Model.Birthday.ToString("yyyy-MM-dd")" />
+        </div>
+        <div class="form-group">
+            <label for="PhoneNumber" id="tel-label" class="col-form-label">@(RoleConst.OgrenciRole == Model.RoleName ? "Öğrenci Telefon Numarası" : "Öğrenci Telefon Numarası"):</label>
+            <input required type="number" class="form-control" name="PhoneNumber" id="PhoneNumber" value="@Model.PhoneNumber" />
+        </div>
+        <div class="form-group">
+            <label for="CityId" class="col-form-label">Şehir:</label>
+            <select class="form-control" id="CityId" name="CityId">
+                @foreach (var item in ViewBag.City)
+                {
+                    if (item.Id == Model.CityId)
+                    {
+                        <option selected value="@item.Id">@item.CityName</option>
+                    }
+                    else
+                    {
+                        <option value="@item.Id">@item.CityName</option>
+                    }
+                }
+            </select>
+        </div>
+        @if (Model.RoleName == RoleConst.OgrenciRole)
+        {
+            <div class="form-group">
+                <label for="ClassId" class="col-form-label">Sınıf:</label>
+                <select class="form-control" id="ClassId" name="ClassId">
+                    @foreach (var item in ViewBag.Class)
+                    {
+                        if (item.Id == Model.ClassId)
+                        {
+                            <option selected value="@item.Id">@item.ClassName</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.ClassName</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="DepartmentId" class="col-form-label">Bölüm:</label>
+                <select class="form-control" id="DepartmentId" name="DepartmentId">
+                    @foreach (var item in ViewBag.Department)
+                    {
+                        if (item.Id == Model.DepartmentId)
+                        {
+                            <option selected value="@item.Id">@item.DepartmentName</option>
+                        }
+                        else
+                        {
+                            <option value="@item.Id">@item.DepartmentName</option>
+                        }
+                    }
+                </select>
+            </div>
+        }
+    </div>
+    <div class="modal-footer">
+        <button href="~/Admin/User/Index" type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+        <button type="submit" class="btn btn-primary">Güncelle</button>
+    </div>
+</form>
+
+@* @if (Model.RoleName == RoleConst.OgretmenRole)
+{
+    <input type="hidden" class="form-control" id="TeacherId" name="TeacherId" value="@Model.TeacherId">
+    <div class="modal-body">
+        <form id="add-row-table" onsubmit="return AddRowTeacherTable(event)">
+            <div class="form-group">
+                <label for="CourseId" class="col-form-label">Ders Adı:</label>
+                <select name="CourseId" id="CourseId" class="form-control">
+                    @foreach (var item in ViewBag.Courses)
+                    {
+                        <option value="@item.Id">@item.CourseName</option>
+                    }
+                </select>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Ekle</button>
+            </div>
+        </form>
+        <table id="teacher-course-table-table" class="table table-bordered nowrap table-sm mt-3">
+            <thead>
+                <tr>
+                    <th hidden>TeacherId</th>
+                    <th hidden>CourseId</th>
+                    <th>Ders Adı</th>
+                    <th>Sil</th>
+                </tr>
+            </thead>
+            <tbody id="teacher-course-table-body">
+                @foreach (var item in ViewBag.TeacherCourse)
+                {
+                    <tr>
+                        <th hidden><input type="hidden" id="teacher-id" value="@item.TeacherId" /></th>
+                        <th hidden><input type="hidden" id="course-id" value="@item.CourseId" /></th>
+                        <th>@item.CourseName<input type="hidden" id="department-id" value="@item.CourseName" /></th>
+                        <th style="text-align:center;"><i onclick="DeleteRow(this)" class="fa fa-trash" aria-hidden="true"></i></th>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <form onsubmit="return TeacherCoursesTableUpdate(event)">
+            <div class="modal-footer">
+                <button href="~/Admin/User/Index" type="button" class="btn btn-secondary" data-dismiss="modal">Kapat</button>
+                <button type="submit" class="btn btn-primary">Güncelle</button>
+            </div>
+        </form>
+    </div>
+} *@
+
+<script src="/js/admin/user.js"></script>

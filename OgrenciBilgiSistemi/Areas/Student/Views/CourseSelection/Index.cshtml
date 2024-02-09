@@ -1,0 +1,116 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Student/Views/Shared/_StudentLayout.cshtml";
+}
+
+@{
+    // ViewBag'den verileri çekme
+    var courseSelectionData = ViewBag.CourseSelectionData as List<OgrenciBilgiSistemi.Dto.CourseSelection.CourseSelectionDto>;
+}
+<style>
+    table {
+        border-collapse: collapse;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+</style>
+@model OgrenciBilgiSistemi.Dto.CourseSelection.StudentInfoDto
+<div class="row">
+    <div class="col-md-8">
+        <form id="courseSelection-create-form" onsubmit="return AddRowTable(event)">
+            <div class="modal-body">
+                <label for="TeacherandCourses" class="col-form-label">Ders:</label>
+                <select name="TeacherandCourses" id="TeacherandCourses" class="form-control">
+                    @foreach (var item in courseSelectionData)
+                    {
+                        <option value="@item.Id"
+                                data-credit="@item.CourseCredit"
+                                style="@if (item.CourseStatus == 1) {
+                                             <text>color: red;</text>
+                                        } 
+                                       else if(item.CourseStatus == 2) {
+                                             <text>color: blue;</text>
+                                        }
+                                       else{
+                                             <text>color: green;</text>
+                                        }">@item.TeacherNameSurname</option>
+                    }
+                </select>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="StudentSemester" class="col-form-label">Bulunduğumuz Dönem:</label>
+                    <input required disabled type="text" class="form-control" id="StudentSemester" name="StudentSemester" value="@Model.SemesterName">
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="StudentClass" class="col-form-label">Sınıf:</label>
+                    <input required disabled type="text" class="form-control" id="StudentClass" name="StudentClass" value="@Model.ClassName">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Ekle</button>
+            </div>
+        </form>
+        <table id="CourseSelectionTable" class="table table-bordered nowrap table-sm">
+            <thead>
+                <tr>
+                    <th hidden>Id</th>
+                    <th>Ders / Öğretmen</th>
+                    <th hidden>Kredi</th>
+                    <th>Sil</th>
+                </tr>
+            </thead>
+            <tbody id="CourseSelectionTableBody">
+                @foreach (var item in ViewBag.CourseSelection)
+                {
+                    <tr>
+                        <td>@item.CourseName / @item.TeacherNameSurname<input type="hidden" id="department-id" value="@item.ClassId" /></td>
+                    </tr>
+                    <tr>
+                        <td>@item.CourseCredit</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="modal-footer">
+            @if (ViewBag.OnayButton == false)
+            {
+                <button onclick="CourseSelectionCreate()" id="onayButton" class="btn btn-primary">ONAYA GÖNDER</button>
+            }
+            else
+            {
+                <button id="onayButton" disabled class="btn btn-primary">ONAYA GÖNDER</button>
+            }
+        </div>
+    </div>
+    <div class="col-md-4 m-auto">
+        <table>
+            <tr>
+                <th>Alabileceğin Kredi</th>
+                <th>Harcanan Toplam Kredi</th>
+            </tr>
+            <tr>
+                <td>45</td>
+                <td id="harcanan-kredi">@ViewBag.SumCredit</td>
+            </tr>
+        </table>
+        <ul class="mt-3">
+            <li style="color:red;">Alttan Ders Rengi</li>
+            <li style="color:blue;">Dönem Ders Rengi</li>
+            <li style="color:green;">Üstten Ders Rengi</li>
+        </ul>
+    </div>
+</div>
+<script src="/js/student/courseSelection.js"></script>
+
+
+

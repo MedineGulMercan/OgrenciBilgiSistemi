@@ -1,0 +1,129 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .main-container {
+            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 20px; /* Düzenleme yapıldı */
+        }
+
+        .row-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .page-container, .shortcut-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 20px;
+            max-width: 600px;
+            flex: 1;
+        }
+
+        .page-container {
+            margin : 0 auto; /* Add this line to center the page-container */
+        }
+            .page-container h2 {
+                color: #3498db;
+                margin-bottom: 10px;
+            }
+
+            .page-container h3 {
+                color: #555;
+            }
+
+            .shortcut-container h6 {
+                color: #3498db;
+                margin-bottom: 10px;
+            }
+
+            .shortcut-container ul {
+                list-style: none;
+                padding: 0;
+            }
+
+            .shortcut-container li {
+                margin-bottom: 8px;
+            }
+
+            .shortcut-container a {
+                text-decoration: none;
+                color: #555;
+            }
+
+                .shortcut-container a:hover {
+                    color: #3498db;
+                }
+    </style>
+    <title>Öğrenci Bilgi Sistemi</title>
+</head>
+<body>
+    <div class="main-container">
+        <div class="page-container">
+            <h2>ÖĞRENCİ BİLGİ SİSTEMİNE HOŞGELDİNİZ,</h2>
+            <br />
+            <h3>@ViewBag.AdminName!</h3>
+            <br />
+        </div>
+        <div class="page-container">
+            <h6>BİLGİLENDİRME: </h6>
+            <h6>1-) Dersler' sayfasına girdiğimizde o derse öğretmen atamak için 'Dersin Adı'na tıklayınız. </h6>
+            <h6>2-) Bir bölümü özelleştirmek için önce 'Sınıf','Dönem','Ders' oluşturmanız ve derslere öğretmen atamanız gerekmektedir.</h6>
+            <h6>3-) Bölümü özelleştirmek için 'Bölümler' sayfasına girip 'Bölüm Adı'na tıklayınız.</h6>
+        </div>
+    </div>
+
+    <div class="row-container">
+       
+        <div class="shortcut-container">
+            <h6>Ders Kaydı Onaylamak İçin Tıklayınız!</h6>
+            <ul>
+                <li><a href="~/Admin/CourseRegistration/Index">★DERS KAYDI ONAY/RED</a></li>
+            </ul>
+        </div>
+
+        <div class="shortcut-container">
+            <h6>Kullanıcı Eklemek İçin Tıklayınız!</h6>
+            <ul>
+                <li><a href="~/Admin/User/Index">★KULLANICI EKLE</a></li>
+            </ul>
+        </div>
+        <div class="shortcut-container">
+            <h6>Bölüm Eklemek İçin Tıklayınız!</h6>
+            <ul>
+                <li><a href="~/Admin/Department/Index">★BÖLÜM EKLE</a></li>
+            </ul>
+        </div>
+        <div class="shortcut-container">
+            <h6>Ders Eklemek İçin Tıklayınız!</h6>
+            <ul>
+                <li><a href="~/Admin/Course/Index">★DERS EKLE</a></li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
